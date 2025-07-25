@@ -75,6 +75,13 @@ const StartupForm = () => {
   });
 
   return (
+    <>
+    
+    {state.status === "SUCCESS" && (
+  <p className="text-green-600 font-medium mb-4">
+    ✅ Pitch submitted successfully!
+  </p>
+)}
     <form action={formAction} className="startup-form">
       <div>
         <label htmlFor="title" className="startup-form_label">
@@ -173,6 +180,13 @@ const StartupForm = () => {
         <Send className="size-6 ml-2" />
       </Button>
     </form>
+
+    {state.status === "ERROR" && (
+  <p className="text-red-600 font-medium mb-4">
+    ❌ {state.error || "Something went wrong. Please try again."}
+  </p>
+)}
+    </>
   );
 };
 

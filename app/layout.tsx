@@ -1,89 +1,31 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
+// Work Sans Font
 const workSans = localFont({
   src: [
-    {
-      path: "./fonts/WorkSans-Black.ttf",
-      weight: "900",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Bold.ttf",
-      weight: "800",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-SemiBold.ttf",
-      weight: "600",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Black.ttf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Black.ttf",
-      weight: "900",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-Thin.ttf",
-      weight: "200",
-      style: "normal",
-    },
-    {
-      path: "./fonts/WorkSans-ExtraLight.ttf",
-      weight: "100",
-      style: "normal",
-    },
+    { path: "./fonts/WorkSans-ExtraLight.ttf", weight: "100", style: "normal" },
+    { path: "./fonts/WorkSans-Thin.ttf", weight: "200", style: "normal" },
+    { path: "./fonts/WorkSans-Regular.ttf", weight: "400", style: "normal" },
+    { path: "./fonts/WorkSans-Black.ttf", weight: "500", style: "normal" },
+    { path: "./fonts/WorkSans-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "./fonts/WorkSans-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/WorkSans-Bold.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/WorkSans-Black.ttf", weight: "900", style: "normal" },
   ],
   variable: "--font-work-sans",
 });
+
+// Roboto Mono Font
 const robotoMono = localFont({
   src: [
-    {
-      path: "./fonts/Roboto-Bold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "./fonts/Roboto-ExtraBold.ttf",
-      weight: "800",
-      style: "normal",
-    },
-    {
-      path: "./fonts/Roboto-MediumItalic.ttf",
-      weight: "500",
-      style: "italic",
-    },
+    { path: "./fonts/Roboto-Bold.ttf", weight: "700", style: "normal" },
+    { path: "./fonts/Roboto-ExtraBold.ttf", weight: "800", style: "normal" },
+    { path: "./fonts/Roboto-MediumItalic.ttf", weight: "500", style: "italic" },
   ],
   variable: "--font-roboto-mono",
 });
-
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-// const robotoMono = Roboto_Mono({
-//   variable: "--font-roboto-mono",
-//   subsets: ["latin"],
-// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -96,11 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-   <body className={`${workSans.variable}  ${robotoMono.variable}`}>
- {/* antialiased ${inter.variable} ${robotoMono.variable} */}
-        {children}
-      </body>
+    <html lang="en" className={`${workSans.variable} ${robotoMono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
