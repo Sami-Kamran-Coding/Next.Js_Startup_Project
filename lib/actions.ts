@@ -5,15 +5,35 @@ import { parseServerActionResponse } from "@/lib/utils";
 import slugify from "slugify";
 import { writeClient } from "@/sanity/lib/write-client";
 
-interface StartupFormFields {
+// ✅ Strongly typed input fields
+export interface StartupFormFields {
   title: string;
   description: string;
   category: string;
   link: string;
 }
 
+// ✅ Optional: Type returned from writeClient.create()
+interface CreatedStartup {
+  _id: string;
+  _type: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  slug: {
+    _type: "slug";
+    current: string;
+  };
+  author: {
+    _type: "reference";
+    _ref: string;
+  };
+  pitch: string;
+}
+
 export const createPitch = async (
-  state: unknown, // <-- use unknown if unused or strictly type it if needed
+  state: unknown, // ✅ Use `unknown` if not used; no need for `any`
   form: FormData,
   pitch: string,
 ) => {
@@ -26,11 +46,13 @@ export const createPitch = async (
     });
   }
 
+  // ✅ Typed form entries
   const formEntries = Object.fromEntries(
     Array.from(form.entries()).filter(([key]) => key !== "pitch")
   );
 
-  const { title, description, category, link } = formEntries as Record<string, FormDataEntryValue>;
+  const { title, description, category, link } =
+    formEntries as Record<keyof StartupFormFields, FormDataEntryValue>;
 
   const startupFields: StartupFormFields = {
     title: String(title ?? ""),
@@ -39,17 +61,17 @@ export const createPitch = async (
     link: String(link ?? ""),
   };
 
-  const slug = slugify(String(title), { lower: true, strict: true });
+  const slug = slugify(startupFields.title, { lower: true, strict: true });
 
   try {
-    const startup = {
+    const startup: Omit<CreatedStartup, "_id"> = {
       _type: "startup",
-      title,
-      description,
-      category,
-      image: link,
+      title: startupFields.title,
+      description: startupFields.description,
+      category: startupFields.category,
+      image: startupFields.link,
       slug: {
-        _type: "slug", // <-- correct slug type
+        _type: "slug",
         current: slug,
       },
       author: {

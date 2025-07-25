@@ -4,14 +4,16 @@ import { STARTUPS_BY_AUTHOR_QUERY } from "@/sanity/lib/queries";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 
 const UserStartups = async ({ id }: { id: string }) => {
-  const startups = await client.fetch(STARTUPS_BY_AUTHOR_QUERY, { id });
-
-  const typedStartups = startups as StartupTypeCard[];
+  // Correctly type the result directly
+  const startups: StartupTypeCard[] = await client.fetch<StartupTypeCard[]>(
+    STARTUPS_BY_AUTHOR_QUERY,
+    { id }
+  );
 
   return (
     <>
-      {typedStartups.length > 0 ? (
-        typedStartups.map((startup) => (
+      {startups.length > 0 ? (
+        startups.map((startup) => (
           <StartupCard key={startup._id} post={startup} />
         ))
       ) : (
