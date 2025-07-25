@@ -1,15 +1,17 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
 import { STARTUPS_BY_AUTHOR_QUERY } from "@/sanity/lib/queries";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 
 const UserStartups = async ({ id }: { id: string }) => {
   const startups = await client.fetch(STARTUPS_BY_AUTHOR_QUERY, { id });
 
+  const typedStartups = startups as StartupTypeCard[];
+
   return (
     <>
-      {startups.length > 0 ? (
-        startups.map((startup: any ) => (
+      {typedStartups.length > 0 ? (
+        typedStartups.map((startup) => (
           <StartupCard key={startup._id} post={startup} />
         ))
       ) : (
@@ -18,4 +20,5 @@ const UserStartups = async ({ id }: { id: string }) => {
     </>
   );
 };
+
 export default UserStartups;

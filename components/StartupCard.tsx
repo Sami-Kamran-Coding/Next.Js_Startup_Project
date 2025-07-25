@@ -40,13 +40,15 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
           </Link>
         </div>
               <Link href={`/user/${author?._id}`}>
-          <Image
-            src={author?.image || "/anonymus.png"}
-  alt={author?.name || "anonymus"}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
+ <Image
+  src={image || "/placeholder.jpg"} // Fallback if `image` is null
+  alt={title || "Startup image"}
+  width={600}
+  height={300}
+  className="startup-card_img"
+  unoptimized // Optional: only use if you're using external images not handled by Next.js
+/>
+
         </Link>
       </div>
 

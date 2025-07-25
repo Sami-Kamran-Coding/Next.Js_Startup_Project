@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "images.unsplash.com",
       "plus.unsplash.com",
       "avatars.githubusercontent.com", // ✅ Added this line
+       "cdn.sanity.io",
     ],
   },
 
