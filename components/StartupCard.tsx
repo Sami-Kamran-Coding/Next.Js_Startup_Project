@@ -21,11 +21,11 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
   } = post;
 
   return (
-    <li className="startup-card text-white bg-black p-4  group">
+    <li className="startup-card group">
       <div className="flex-between">
         <p className="startup_card_date">{formatDate(_createdAt)}</p>
         <div className="flex gap-1.5">
-          <EyeIcon className="size-6 text-white" />
+          <EyeIcon className="size-6 text-primary" />
           <span className="text-16-medium">{views}</span>
         </div>
       </div>
@@ -39,16 +39,14 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
-              <Link href={`/user/${author?._id}`}>
- <Image
-  src={image || "/placeholder.jpg"} // Fallback if `image` is null
-  alt={title || "Startup image"}
-  width={600}
-  height={300}
-  className="startup-card_img"
-  unoptimized // Optional: only use if you're using external images not handled by Next.js
-/>
-
+        <Link href={`/user/${author?._id}`}>
+          <Image
+            src={author?.image!}
+            alt={author?.name!}
+            width={48}
+            height={48}
+            className="rounded-full"
+          />
         </Link>
       </div>
 

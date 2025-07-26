@@ -1,26 +1,19 @@
 import { defineQuery } from "next-sanity";
 
-export const STARTUPS_QUERY = defineQuery(`
-  *[
-    _type == "startup" &&
-    defined(slug.current) &&
-    (!defined($search) || title match $search || category match $search)
-  ] | order(_createdAt desc) {
-    _id,
-    _type,
-    _rev,
-    _createdAt,
-    _updatedAt,
-    title,
-    slug,
-    author, // keep as reference
-    views,
-    description,
-    category,
-    image,
-    pitch
-  }
-`);
+export const STARTUPS_QUERY =
+  defineQuery(`*[_type == "startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {
+  _id, 
+  title, 
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, image, bio
+  }, 
+  views,
+  description,
+  category,
+  image,
+}`);
 
 export const STARTUP_BY_ID_QUERY =
   defineQuery(`*[_type == "startup" && _id == $id][0]{
@@ -83,32 +76,27 @@ export const STARTUPS_BY_AUTHOR_QUERY =
   image,
 }`);
 
-
-
 export const PLAYLIST_BY_SLUG_QUERY =
   defineQuery(`*[_type == "playlist" && slug.current == $slug][0]{
+  _id,
+  title,
+  slug,
+  select[]->{
     _id,
+    _createdAt,
     title,
     slug,
-    select[]->{
+    author->{
       _id,
-      _type,
-      _rev,
-      _updatedAt,
-      _createdAt,
-      title,
+      name,
       slug,
-      author->{
-        _id,
-        name,
-        slug,
-        image,
-        bio
-      },
-      views,
-      description,
-      category,
       image,
-      pitch
-    }
-  }`);
+      bio
+    },
+    views,
+    description,
+    category,
+    image,
+    pitch
+  }
+}`);
