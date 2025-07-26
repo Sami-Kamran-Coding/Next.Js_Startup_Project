@@ -28,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={workSans.variable}>
-      <body>{children}</body>
+    <html lang="en">
+      <body className={workSans.variable}>{children}</body>
     </html>
   );
 }
